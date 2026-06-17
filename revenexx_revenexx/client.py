@@ -37,6 +37,12 @@ class Client:
         self._global_headers[key.lower()] = value
         return self
 
+    def set_tenant(self, value):
+        """The tenant slug your requests are scoped to, sent as the X-Revenexx-Tenant header on every request."""
+
+        self._global_headers['x-revenexx-tenant'] = value
+        return self
+
     def set_api_key_auth(self, value):
         """A gateway-managed scoped API key (rvxk_…)."""
 

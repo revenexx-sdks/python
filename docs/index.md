@@ -29,128 +29,101 @@ uv add packageName
 ## Getting Started
 
 ### Init your SDK
-Initialize your SDK with your Revenexx server API endpoint and project ID which can be found on your project settings page and your new API secret Key from project's API keys section.
+
+Initialize your SDK with your Revenexx API endpoint and your credentials. The client supports two authentication methods:
+
+- **API key** — a gateway-managed scoped key (`rvxk_…`), set via `set_api_key_auth()`. Intended for server-side or trusted environments; never embed an API key in code shipped to a client.
+- **Bearer token** — a Zitadel-issued JWT for interactive callers, set via `set_bearer_auth()`. The value is sent as the `Authorization` header verbatim, so include the `Bearer ` prefix.
+
+Use `set_tenant()` to scope every request to a tenant — it sends the `X-Revenexx-Tenant` header on each call.
 
 ```python
-from revenexx.client import Client
-from revenexx.services.users import Users
+from revenexx_revenexx.client import Client
 
 client = Client()
 
 (client
-  .set_endpoint('https://revenexx.com/v1') # Your API Endpoint
-  .set_project('5df5acd0d48c2') # Your project ID
-  .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
-  .set_self_signed() # Use only on dev mode with a self-signed SSL cert
+  .set_endpoint('https://api.revenexx.com')  # Your Revenexx API endpoint
+  .set_tenant('<TENANT_SLUG>')               # Your tenant slug
+  .set_api_key_auth('rvxk_...')              # Your scoped API key
+)
+```
+
+Or, with a user JWT:
+
+```python
+from revenexx_revenexx.client import Client
+
+client = Client()
+
+(client
+  .set_endpoint('https://api.revenexx.com')
+  .set_tenant('<TENANT_SLUG>')
+  .set_bearer_auth(f'Bearer {jwt}')
 )
 ```
 
 ### Make Your First Request
-Once your SDK object is set, create any of the Revenexx service objects and choose any request to send. Full documentation for any service method you would like to use can be found in your SDK documentation or in the [API References](https://revenexx.com/docs) section.
 
-All service methods return typed Pydantic models, so you can access response fields as attributes:
+Once your client is set up, instantiate any of the Revenexx services with it and send a request. Full documentation for every service method can be found in your SDK documentation or in the [API References](https://revenexx.com/docs) section.
 
 ```python
-users = Users(client)
+from revenexx_revenexx.services.products import Products
 
-user = users.create(ID.unique(), email = "email@example.com", phone = "+123456789", password = "password", name = "Max Mustermann")
+products = Products(client)
 
-print(user.name)   # "Max Mustermann"
-print(user.email)  # "email@example.com"
-print(user.id)     # The generated user ID
+result = products.products_list()
 ```
 
 ### Full Example
+
 ```python
-from revenexx.client import Client
-from revenexx.services.users import Users
-from revenexx.id import ID
+from revenexx_revenexx.client import Client
+from revenexx_revenexx.services.products import Products
+from revenexx_revenexx.models import Products as ProductsModel
 
 client = Client()
 
 (client
-  .set_endpoint('https://revenexx.com/v1') # Your API Endpoint
-  .set_project('5df5acd0d48c2') # Your project ID
-  .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
-  .set_self_signed() # Use only on dev mode with a self-signed SSL cert
+  .set_endpoint('https://api.revenexx.com')
+  .set_tenant('<TENANT_SLUG>')
+  .set_api_key_auth('rvxk_...')
 )
 
-users = Users(client)
+products = Products(client)
 
-user = users.create(ID.unique(), email = "email@example.com", phone = "+123456789", password = "password", name = "Max Mustermann")
+result = products.products_list()
 
-print(user.name)       # Access fields as attributes
-print(user.to_dict())  # Convert to dictionary if needed
-```
-
-### Type Safety with Models
-
-The Revenexx Python SDK provides type safety when working with database rows through generic methods. Methods like `get_row`, `list_rows`, and others accept a `model_type` parameter that allows you to specify your custom Pydantic model for full type safety.
-
-```python
-from pydantic import BaseModel
-from datetime import datetime
-from typing import Optional
-from revenexx.client import Client
-from revenexx.services.tables_db import TablesDB
-
-# Define your custom model matching your table schema
-class Post(BaseModel):
-    postId: int
-    authorId: int
-    title: str
-    content: str
-    createdAt: datetime
-    updatedAt: datetime
-    isPublished: bool
-    excerpt: Optional[str] = None
-
-client = Client()
-# ... configure your client ...
-
-tables_db = TablesDB(client)
-
-# Fetch a single row with type safety
-row = tables_db.get_row(
-    database_id="your-database-id",
-    table_id="your-table-id",
-    row_id="your-row-id",
-    model_type=Post  # Pass your custom model type
+product: ProductsModel = products.products_get(
+    id='<PRODUCT_ID>'
 )
 
-print(row.data.title)     # Fully typed - IDE autocomplete works
-print(row.data.postId)    # int type, not Any
-print(row.data.createdAt) # datetime type
-
-# Fetch multiple rows with type safety
-result = tables_db.list_rows(
-    database_id="your-database-id",
-    table_id="your-table-id",
-    model_type=Post
-)
-
-for row in result.rows:
-    print(f"{row.data.title} by {row.data.authorId}")
+print(product.model_dump())  # Convert the typed model to a dictionary
 ```
 
 ### Error Handling
-The Revenexx Python SDK raises `RevenexxException` object with `message`, `code` and `response` properties. You can handle any errors by catching `RevenexxException` and present the `message` to the user or handle it yourself based on the provided error information. Below is an example.
+
+The Revenexx Python SDK raises a `RevenexxAPIRevenexxException` with `message`, `code` and `response` properties. You can handle any errors by catching `RevenexxAPIRevenexxException` and present the `message` to the user or handle it yourself based on the provided error information. Below is an example.
 
 ```python
-users = Users(client)
+from revenexx_revenexx.exception import RevenexxAPIRevenexxException
+from revenexx_revenexx.services.products import Products
+
+products = Products(client)
+
 try:
-  user = users.create(ID.unique(), email = "email@example.com", phone = "+123456789", password = "password", name = "Max Mustermann")
-  print(user.name)
-except RevenexxException as e:
-  print(e.message)
+    product = products.products_get(id='<PRODUCT_ID>')
+    print(product.model_dump())
+except RevenexxAPIRevenexxException as error:
+    print(error.code, error.message)
 ```
 
 ### Learn more
+
 You can use the following resources to learn more and get help
-- 🚀 [Getting Started Tutorial](https://revenexx.com/docs/getting-started-for-server)
+
 - 📜 [Revenexx Docs](https://revenexx.com/docs)
 - 💬 [Discord Community](https://revenexx.com/discord)
-- 🚂 [Revenexx Python Playground](https://github.com/revenexx/playground-for-python)
 
 ## Contribution
 
