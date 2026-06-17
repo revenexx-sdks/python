@@ -1,0 +1,15 @@
+```python
+from revenexx_revenexx.client import Client
+from revenexx_revenexx.services.sites import Sites
+from revenexx_revenexx.models import SpecificationList
+
+client = Client()
+client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
+client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_…).
+
+sites = Sites(client)
+
+result: SpecificationList = sites.sites_list_specifications()
+
+print(result.model_dump())
+```

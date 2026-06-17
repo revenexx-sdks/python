@@ -1,0 +1,6 @@
+site_name: Revenexx Python
+site_description: "Revenexx Python SDK."
+docs_dir: docs
+
+theme:
+  name: material

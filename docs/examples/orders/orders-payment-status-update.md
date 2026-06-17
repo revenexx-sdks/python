@@ -1,0 +1,20 @@
+```python
+from revenexx_revenexx.client import Client
+from revenexx_revenexx.services.orders import Orders
+from revenexx_revenexx.models import Order
+from revenexx_revenexx.enums import OrderPaymentStatus
+
+client = Client()
+client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
+client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_…).
+
+orders = Orders(client)
+
+result: Order = orders.orders_payment_status_update(
+    id = '',
+    status = OrderPaymentStatus.OPEN,
+    payment_id = '' # optional
+)
+
+print(result.model_dump())
+```

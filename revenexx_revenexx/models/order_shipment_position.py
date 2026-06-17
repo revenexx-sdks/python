@@ -1,0 +1,18 @@
+from typing import Any, Dict, List, Optional, Union, cast
+from pydantic import Field, PrivateAttr
+
+from .base_model import AppwriteModel
+
+class OrderShipmentPosition(AppwriteModel):
+    """
+    A position quantity to ship — guarded against the open quantity.
+
+    Attributes
+    ----------
+    order_item_id : str
+        The order item (position) to act on.
+    quantity : Optional[float]
+        Defaults to the full remaining quantity of the position.
+    """
+    order_item_id: str = Field(..., alias='order_item_id')
+    quantity: Optional[float] = Field(default=None, alias='quantity')
