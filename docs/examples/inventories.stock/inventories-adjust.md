@@ -1,0 +1,23 @@
+```python
+from revenexx.client import Client
+from revenexx.services.inventories_stock import InventoriesStock
+from revenexx.models import Error
+from revenexx.models import InventoryAdjustItem
+
+client = Client()
+client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
+client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_…).
+
+inventories_stock = InventoriesStock(client)
+
+result: Error = inventories_stock.inventories_adjust(
+    items = [InventoryAdjustItem()], # optional
+    location_code = 'main', # optional
+    product_id = '', # optional
+    quantity = -3, # optional
+    reason = 'Stocktake 2026-03, two units damaged', # optional
+    sku = 'ACME-4711-BLK' # optional
+)
+
+print(result.model_dump())
+```

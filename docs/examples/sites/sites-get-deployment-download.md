@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.sites import Sites
-from revenexx_revenexx.enums import Type
+from revenexx.client import Client
+from revenexx.services.sites import Sites
+from revenexx.enums import AppsGetDeploymentDownloadType
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -12,6 +12,6 @@ sites = Sites(client)
 result = sites.sites_get_deployment_download(
     site_id = '',
     deployment_id = '',
-    type = Type.SOURCE # optional
+    type = AppsGetDeploymentDownloadType.SOURCE # optional
 )
 ```

@@ -1,6 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.carts import Carts
+from revenexx.client import Client
+from revenexx.services.carts import Carts
+from revenexx.models import Error
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -8,7 +9,9 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 carts = Carts(client)
 
-result = carts.carts_delete(
+result: Error = carts.carts_delete(
     id = ''
 )
+
+print(result.model_dump())
 ```

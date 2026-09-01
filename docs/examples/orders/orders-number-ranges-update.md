@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.orders import Orders
-from revenexx_revenexx.models import NumberRange
+from revenexx.client import Client
+from revenexx.services.orders import Orders
+from revenexx.models import Error
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -9,16 +9,18 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 orders = Orders(client)
 
-result: NumberRange = orders.orders_number_ranges_update(
+result: Error = orders.orders_number_ranges_update(
     id = '',
     channel_id = '', # optional
-    code = '', # optional
-    counter = None, # optional
-    metadata = {}, # optional
-    padding = None, # optional
-    position_step = None, # optional
-    prefix = '', # optional
-    step = None, # optional
+    code = 'order', # optional
+    counter = 123, # optional
+    metadata = {
+        "owner": "erp-sync"
+    }, # optional
+    padding = 6, # optional
+    position_step = 10, # optional
+    prefix = 'ORD-', # optional
+    step = 1, # optional
     suffix = '' # optional
 )
 

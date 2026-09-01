@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.markets import Markets
-from revenexx_revenexx.models import MarketCurrency
+from revenexx.client import Client
+from revenexx.services.markets import Markets
+from revenexx.models import Error
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -9,11 +9,11 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 markets = Markets(client)
 
-result: MarketCurrency = markets.markets_currencies_create(
+result: Error = markets.markets_currencies_create(
     market_id = '',
-    code = '',
-    is_default = None, # optional
-    position = None # optional
+    code = 'EUR',
+    is_default = True, # optional
+    position = 0 # optional
 )
 
 print(result.model_dump())

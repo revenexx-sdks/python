@@ -1,8 +1,8 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.apps import Apps
-from revenexx_revenexx.models import Deployment
-from revenexx_revenexx.enums import Type
+from revenexx.client import Client
+from revenexx.services.apps import Apps
+from revenexx.models import Deployment
+from revenexx.enums import AppsCreateVcsDeploymentType
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -12,9 +12,9 @@ apps = Apps(client)
 
 result: Deployment = apps.apps_create_vcs_deployment(
     function_id = '',
-    reference = '',
-    type = Type.BRANCH,
-    activate = None # optional
+    reference = 'main',
+    type = AppsCreateVcsDeploymentType.BRANCH,
+    activate = True # optional
 )
 
 print(result.model_dump())

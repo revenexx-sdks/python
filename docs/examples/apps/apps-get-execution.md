@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.apps import Apps
-from revenexx_revenexx.models import Execution
+from revenexx.client import Client
+from revenexx.services.apps import Apps
+from revenexx.models import Execution
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint

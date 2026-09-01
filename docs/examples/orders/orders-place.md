@@ -1,8 +1,8 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.orders import Orders
-from revenexx_revenexx.models import OrderDetail
-from revenexx_revenexx.models import OrderItemCreateRequest
+from revenexx.client import Client
+from revenexx.services.orders import Orders
+from revenexx.models import Error
+from revenexx.models import OrderItemCreateRequest
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -10,24 +10,54 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 orders = Orders(client)
 
-result: OrderDetail = orders.orders_place(
+result: Error = orders.orders_place(
     items = [OrderItemCreateRequest()],
-    billing_address = {}, # optional
-    buyer = {}, # optional
+    billing_address = {
+        "city": "Berlin",
+        "company": "Beispiel Industrietechnik GmbH",
+        "country": "DE",
+        "name": "Anna Berger",
+        "street": "Musterstra\u00dfe 12",
+        "zip": "10115"
+    }, # optional
+    buyer = {
+        "company": "Beispiel Industrietechnik GmbH",
+        "customer_number": "K-10042",
+        "email": "anna.berger@example.com",
+        "name": "Anna Berger"
+    }, # optional
     cart_id = '', # optional
     channel_id = '', # optional
     contact_id = '', # optional
-    currency = '', # optional
-    customer_order_number = '', # optional
-    grand_total = None, # optional
-    market_id = '', # optional
-    metadata = {}, # optional
+    currency = 'EUR', # optional
+    customer_order_number = 'PO-2026-0042', # optional
+    grand_total = 243.9, # optional
+    metadata = {
+        "erp_batch": "2026-W32"
+    }, # optional
     organization_id = '', # optional
-    payment = {}, # optional
-    shipping = {}, # optional
-    shipping_address = {}, # optional
-    shipping_total = None, # optional
-    user_data = {} # optional
+    payment = {
+        "method": "invoice",
+        "status": "open"
+    }, # optional
+    shipping = {
+        "method": "standard",
+        "price": 5.9,
+        "tax_rate": 19
+    }, # optional
+    shipping_address = {
+        "city": "Berlin",
+        "company": "Beispiel Industrietechnik GmbH",
+        "country": "DE",
+        "name": "Anna Berger",
+        "street": "Musterstra\u00dfe 12",
+        "zip": "10115"
+    }, # optional
+    shipping_total = 5.9, # optional
+    user_data = {
+        "campaign": "spring-catalogue",
+        "source": "webshop"
+    } # optional
 )
 
 print(result.model_dump())

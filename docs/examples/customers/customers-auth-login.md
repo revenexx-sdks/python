@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.customers import Customers
-from revenexx_revenexx.models import AuthLoginResponse
+from revenexx.client import Client
+from revenexx.services.customers import Customers
+from revenexx.models import Error
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -9,8 +9,8 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 customers = Customers(client)
 
-result: AuthLoginResponse = customers.customers_auth_login(
-    email = '',
+result: Error = customers.customers_auth_login(
+    email = 'einkauf@example.com',
     password = ''
 )
 

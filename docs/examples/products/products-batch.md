@@ -1,6 +1,6 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.products import Products
+from revenexx.client import Client
+from revenexx.services.products import Products
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint

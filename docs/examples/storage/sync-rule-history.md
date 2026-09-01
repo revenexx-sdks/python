@@ -1,6 +1,6 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.storage import Storage
+from revenexx.client import Client
+from revenexx.services.storage import Storage
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -10,7 +10,7 @@ storage = Storage(client)
 
 result = storage.sync_rule_history(
     rule_id = '', # optional
-    from = '', # optional
-    to = '' # optional
+    from = '2026-01-01T12:00:00Z', # optional
+    to = '2026-01-01T12:00:00Z' # optional
 )
 ```

@@ -1,9 +1,9 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.channels import Channels
-from revenexx_revenexx.models import Channel
-from revenexx_revenexx.enums import ChannelStatus
-from revenexx_revenexx.enums import ChannelType
+from revenexx.client import Client
+from revenexx.services.channels import Channels
+from revenexx.models import Error
+from revenexx.enums import ChannelStatus
+from revenexx.enums import ChannelUnassignedVisibility
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -11,14 +11,18 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 channels = Channels(client)
 
-result: Channel = channels.channels_create(
-    code = '',
-    name = '',
-    is_default = None, # optional
-    labels = {}, # optional
-    position = None, # optional
+result: Error = channels.channels_create(
+    code = 'shop',
+    name = 'Shop',
+    is_default = True, # optional
+    labels = {
+        "de": "Shop",
+        "en": "Shop"
+    }, # optional
+    position = 1, # optional
     status = ChannelStatus.ACTIVE, # optional
-    type = ChannelType.STOREFRONT # optional
+    type = 'storefront', # optional
+    unassigned_visibility = ChannelUnassignedVisibility.INHERIT # optional
 )
 
 print(result.model_dump())
