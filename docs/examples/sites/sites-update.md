@@ -1,10 +1,10 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.sites import Sites
-from revenexx_revenexx.models import Site
-from revenexx_revenexx.enums import Framework
-from revenexx_revenexx.enums import Adapter
-from revenexx_revenexx.enums import BuildRuntime
+from revenexx.client import Client
+from revenexx.services.sites import Sites
+from revenexx.models import Site
+from revenexx.enums import Framework
+from revenexx.enums import Adapter
+from revenexx.enums import BuildRuntime
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -17,20 +17,20 @@ result: Site = sites.sites_update(
     framework = Framework.ANALOG,
     name = '',
     adapter = Adapter.STATIC, # optional
-    build_command = '', # optional
+    build_command = 'npm run build', # optional
     build_runtime = BuildRuntime.NODE_18_0, # optional
-    enabled = None, # optional
-    fallback_file = '', # optional
-    install_command = '', # optional
+    enabled = True, # optional
+    fallback_file = 'index.html', # optional
+    install_command = 'npm install', # optional
     installation_id = '', # optional
-    logging = None, # optional
+    logging = True, # optional
     output_directory = '', # optional
-    provider_branch = '', # optional
+    provider_branch = 'main', # optional
     provider_repository_id = '', # optional
     provider_root_directory = '', # optional
-    provider_silent_mode = None, # optional
-    specification = '', # optional
-    timeout = None # optional
+    provider_silent_mode = True, # optional
+    specification = 's-1vcpu-512mb', # optional
+    timeout = 1 # optional
 )
 
 print(result.model_dump())

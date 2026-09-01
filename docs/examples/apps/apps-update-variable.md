@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.apps import Apps
-from revenexx_revenexx.models import Variable
+from revenexx.client import Client
+from revenexx.services.apps import Apps
+from revenexx.models import Variable
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -13,7 +13,7 @@ result: Variable = apps.apps_update_variable(
     function_id = '',
     variable_id = '',
     key = '',
-    secret = None, # optional
+    secret = True, # optional
     value = '' # optional
 )
 

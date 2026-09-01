@@ -1,8 +1,8 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.apps import Apps
-from revenexx_revenexx.models import Deployment
-from revenexx_revenexx.enums import Type
+from revenexx.client import Client
+from revenexx.services.apps import Apps
+from revenexx.models import Deployment
+from revenexx.enums import Type
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -17,7 +17,7 @@ result: Deployment = apps.apps_create_template_deployment(
     repository = '',
     root_directory = '',
     type = Type.COMMIT,
-    activate = None # optional
+    activate = True # optional
 )
 
 print(result.model_dump())

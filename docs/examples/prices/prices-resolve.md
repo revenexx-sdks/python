@@ -1,7 +1,8 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.prices import Prices
-from revenexx_revenexx.models import PriceResolveItem
+from revenexx.client import Client
+from revenexx.services.prices import Prices
+from revenexx.models import Error
+from revenexx.models import PriceResolveItem
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -9,13 +10,15 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 prices = Prices(client)
 
-result = prices.prices_resolve(
+result: Error = prices.prices_resolve(
     items = [PriceResolveItem()],
-    at = '', # optional
+    at = '2026-03-15T09:00:00Z', # optional
     channel_id = '', # optional
     contact_id = '', # optional
-    currency = '', # optional
+    currency = 'EUR', # optional
     market_id = '', # optional
     organization_id = '' # optional
 )
+
+print(result.model_dump())
 ```

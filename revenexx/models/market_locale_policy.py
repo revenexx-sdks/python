@@ -1,0 +1,24 @@
+from typing import Any, Dict, List, Optional, Union, cast
+from pydantic import Field, PrivateAttr
+
+from .base_model import AppwriteModel
+from ..enums.market_locale_fallback import MarketLocaleFallback
+from ..enums.market_locale_granularity import MarketLocaleGranularity
+from .market_locale_keys import MarketLocaleKeys
+
+class MarketLocalePolicy(AppwriteModel):
+    """
+    How this tenant keys its translations, resolved rather than named: the key a client WRITES and the order it READS, per locale. Emitting the resolved answer is the point — a client handed only the setting names re-implements the policy and gets it subtly different, which is how a label editor came to ask for de-DE while the row held de.
+
+    Attributes
+    ----------
+    fallback : Optional[MarketLocaleFallback]
+        settings#locale_fallback — what a read tries after the exact key holds nothing.
+    granularity : Optional[MarketLocaleGranularity]
+        settings#locale_granularity — whether a value is keyed by the full locale (&#039;regional&#039;) or by its language alone.
+    locales : Optional[List[MarketLocaleKeys]]
+        One entry per locale this market registers, in position order — the keys to use for that locale. A market with no locale of its own has an empty array here, not the fallback: the fallback answers `default_locale`, and there is nothing to key against.
+    """
+    fallback: Optional[MarketLocaleFallback] = Field(default=None, alias='fallback')
+    granularity: Optional[MarketLocaleGranularity] = Field(default=None, alias='granularity')
+    locales: Optional[List[MarketLocaleKeys]] = Field(default=None, alias='locales')

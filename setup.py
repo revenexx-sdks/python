@@ -6,9 +6,9 @@ with open("README.md", "r", encoding="utf-8") as readme_file_desc:
     long_description = readme_file_desc.read()
 
 setuptools.setup(
-  name = 'revenexx_revenexx',
+  name = 'revenexx',
   packages = setuptools.find_packages(),
-  version = '0.0.1',
+  version = '0.0.2',
   license='',
   description = 'Revenexx Python SDK.',
   long_description = long_description,
@@ -18,7 +18,7 @@ setuptools.setup(
   maintainer = 'Revenexx Platform',
   maintainer_email = '',
   url = 'https://revenexx.com',
-  download_url='https://github.com/revenexx-sdks/python/archive/0.0.1.tar.gz',
+  download_url='https://github.com/revenexx-sdks/python/archive/0.0.2.tar.gz',
   install_requires=[
     'requests',
     'pydantic>=2,<3',
@@ -29,7 +29,7 @@ setuptools.setup(
     'Intended Audience :: Developers',
     'Environment :: Web Environment',
     'Topic :: Software Development',
-    'License :: OSI Approved :: MIT',
+    'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',

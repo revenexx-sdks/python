@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.sites import Sites
-from revenexx_revenexx.models import ExecutionList
+from revenexx.client import Client
+from revenexx.services.sites import Sites
+from revenexx.models import ExecutionList
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -12,7 +12,7 @@ sites = Sites(client)
 result: ExecutionList = sites.sites_list_logs(
     site_id = '',
     queries = [], # optional
-    total = None # optional
+    total = True # optional
 )
 
 print(result.model_dump())

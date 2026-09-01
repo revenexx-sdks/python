@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.storage import Storage
-from revenexx_revenexx.enums import Visibility
+from revenexx.client import Client
+from revenexx.services.storage import Storage
+from revenexx.enums import Visibility
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint

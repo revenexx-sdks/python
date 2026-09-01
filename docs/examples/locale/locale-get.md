@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.locale import Locale
-from revenexx_revenexx.models import Locale as LocaleModel
+from revenexx.client import Client
+from revenexx.services.locale import Locale
+from revenexx.models import Locale as LocaleModel
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint

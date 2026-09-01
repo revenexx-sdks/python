@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.channels import Channels
-from revenexx_revenexx.models import Channel
+from revenexx.client import Client
+from revenexx.services.channels import Channels
+from revenexx.models import Error
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -9,7 +9,7 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 channels = Channels(client)
 
-result: Channel = channels.channels_get(
+result: Error = channels.channels_get(
     id = ''
 )
 

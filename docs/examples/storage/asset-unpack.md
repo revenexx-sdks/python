@@ -1,6 +1,6 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.storage import Storage
+from revenexx.client import Client
+from revenexx.services.storage import Storage
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -10,7 +10,7 @@ storage = Storage(client)
 
 result = storage.asset_unpack(
     id = '',
-    keep_archive = None, # optional
+    keep_archive = True, # optional
     target_folder_id = '' # optional
 )
 ```

@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.markets import Markets
-from revenexx_revenexx.models import MarketTaxClass
+from revenexx.client import Client
+from revenexx.services.markets import Markets
+from revenexx.models import Error
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -9,14 +9,17 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 markets = Markets(client)
 
-result: MarketTaxClass = markets.markets_tax_classes_create(
+result: Error = markets.markets_tax_classes_create(
     market_id = '',
-    code = '',
-    name = '',
-    is_default = None, # optional
-    labels = {}, # optional
-    position = None, # optional
-    rate = None # optional
+    code = 'standard',
+    name = 'Standard rate',
+    is_default = True, # optional
+    labels = {
+        "de-DE": "Regelsatz",
+        "en-GB": "Standard rate"
+    }, # optional
+    position = 0, # optional
+    rate = 20 # optional
 )
 
 print(result.model_dump())

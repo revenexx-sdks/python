@@ -1,0 +1,20 @@
+from enum import Enum
+
+class AvatarsGetCreditCardCode(Enum):
+    AMEX = "amex"
+    ARGENCARD = "argencard"
+    CABAL = "cabal"
+    CENCOSUD = "cencosud"
+    DINERS = "diners"
+    DISCOVER = "discover"
+    ELO = "elo"
+    HIPERCARD = "hipercard"
+    JCB = "jcb"
+    MASTERCARD = "mastercard"
+    NARANJA = "naranja"
+    TARGETA_SHOPPING = "targeta-shopping"
+    UNIONPAY = "unionpay"
+    VISA = "visa"
+    MIR = "mir"
+    MAESTRO = "maestro"
+    RUPAY = "rupay"

@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.apps import Apps
-from revenexx_revenexx.models import FunctionList
+from revenexx.client import Client
+from revenexx.services.apps import Apps
+from revenexx.models import FunctionList
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -12,7 +12,7 @@ apps = Apps(client)
 result: FunctionList = apps.apps_list(
     queries = [], # optional
     search = '', # optional
-    total = None # optional
+    total = True # optional
 )
 
 print(result.model_dump())

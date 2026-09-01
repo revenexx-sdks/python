@@ -1,0 +1,53 @@
+from typing import Any, Dict, List, Optional, Union, cast, Generic, TypeVar, Type
+from pydantic import Field, PrivateAttr
+
+from .base_model import AppwriteModel
+
+T = TypeVar('T')
+
+class SearchHit(AppwriteModel, Generic[T]):
+    """
+    
+
+    Attributes
+    ----------
+    document : Optional[Dict[str, Any]]
+        The matching document; its properties are the collection&#039;s own fields.
+    highlight : Optional[Dict[str, Any]]
+        Per-field highlight snippets, keyed by field name.
+    text_match : Optional[float]
+        Relevance score.
+    """
+    document: Optional[Dict[str, Any]] = Field(default=None, alias='document')
+    highlight: Optional[Dict[str, Any]] = Field(default=None, alias='highlight')
+    text_match: Optional[float] = Field(default=None, alias='text_match')
+
+    @classmethod
+    def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'SearchHit[T]':
+        """Create SearchHit instance with typed data."""
+        internal_fields = {k: v for k, v in data.items() if k.startswith('$')}
+        user_data = {k: v for k, v in data.items() if not k.startswith('$')}
+        instance = cls.model_validate(internal_fields)
+        instance._data = model_type(**user_data) if model_type is not dict else user_data
+        return instance
+
+    _data: Any = PrivateAttr(default_factory=dict)
+
+    @property
+    def data(self) -> T:
+        return cast(T, self._data)
+
+    @data.setter
+    def data(self, value: T) -> None:
+        object.__setattr__(self, '_data', value)
+
+    def to_dict(self) -> Dict[str, Any]:
+        result = super().to_dict()
+        if hasattr(self, '_data'):
+            if isinstance(self._data, dict):
+                result['data'] = self._data
+            elif hasattr(self._data, 'model_dump'):
+                result['data'] = self._data.model_dump(mode='json')
+            else:
+                result['data'] = self._data
+        return result

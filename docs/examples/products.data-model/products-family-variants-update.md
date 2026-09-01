@@ -1,0 +1,27 @@
+```python
+from revenexx.client import Client
+from revenexx.services.products_data_model import ProductsDataModel
+from revenexx.models import Error
+
+client = Client()
+client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
+client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_…).
+
+products_data_model = ProductsDataModel(client)
+
+result: Error = products_data_model.products_family_variants_update(
+    id = '',
+    axes = [
+        "colour",
+        "size"
+    ], # optional
+    code = 'clothing_by_colour_size', # optional
+    family_id = '', # optional
+    labels = {
+        "de": "Nach Farbe und Gr\u00f6\u00dfe",
+        "en": "By colour and size"
+    } # optional
+)
+
+print(result.model_dump())
+```

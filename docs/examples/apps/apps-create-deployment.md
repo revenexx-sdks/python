@@ -1,7 +1,8 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.apps import Apps
-from revenexx_revenexx.models import Deployment
+from revenexx.client import Client
+from revenexx.services.apps import Apps
+from revenexx.input_file import InputFile
+from revenexx.models import Deployment
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -11,8 +12,8 @@ apps = Apps(client)
 
 result: Deployment = apps.apps_create_deployment(
     function_id = '',
-    activate = None,
-    code = '',
+    activate = True,
+    code = InputFile.from_path('file.png'),
     commands = '', # optional
     entrypoint = '' # optional
 )

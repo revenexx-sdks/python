@@ -1,7 +1,8 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.orders import Orders
-from revenexx_revenexx.models import OrderReturn
+from revenexx.client import Client
+from revenexx.services.orders import Orders
+from revenexx.models import Error
+from revenexx.enums import OrderReturnSettlement
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -9,10 +10,10 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 orders = Orders(client)
 
-result: OrderReturn = orders.orders_returns_complete(
+result: Error = orders.orders_returns_complete(
     id = '',
     rid = '',
-    resolution = '' # optional
+    resolution = OrderReturnSettlement.REFUND # optional
 )
 
 print(result.model_dump())

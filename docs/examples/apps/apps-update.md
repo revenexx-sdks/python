@@ -1,9 +1,9 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.apps import Apps
-from revenexx_revenexx.models import Function
-from revenexx_revenexx.enums import Runtime
-from revenexx_revenexx.enums import Scopes
+from revenexx.client import Client
+from revenexx.services.apps import Apps
+from revenexx.models import Function
+from revenexx.enums import Runtime
+from revenexx.enums import Scopes
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -14,22 +14,22 @@ apps = Apps(client)
 result: Function = apps.apps_update(
     function_id = '',
     name = '',
-    commands = '', # optional
-    enabled = None, # optional
-    entrypoint = '', # optional
+    commands = 'npm install', # optional
+    enabled = True, # optional
+    entrypoint = 'src/main.js', # optional
     events = [], # optional
-    execute = [], # optional
+    execute = ["any"], # optional
     installation_id = '', # optional
-    logging = None, # optional
-    provider_branch = '', # optional
+    logging = True, # optional
+    provider_branch = 'main', # optional
     provider_repository_id = '', # optional
     provider_root_directory = '', # optional
-    provider_silent_mode = None, # optional
+    provider_silent_mode = True, # optional
     runtime = Runtime.NODE_18_0, # optional
-    schedule = '', # optional
+    schedule = '0 3 * * *', # optional
     scopes = [Scopes.SESSIONS_WRITE], # optional
-    specification = '', # optional
-    timeout = None # optional
+    specification = 's-1vcpu-512mb', # optional
+    timeout = 1 # optional
 )
 
 print(result.model_dump())

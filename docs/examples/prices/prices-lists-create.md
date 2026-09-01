@@ -1,8 +1,9 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.prices import Prices
-from revenexx_revenexx.models import PriceList
-from revenexx_revenexx.enums import PriceListStatus
+from revenexx.client import Client
+from revenexx.services.prices import Prices
+from revenexx.models import Error
+from revenexx.enums import PriceListStatus
+from revenexx.enums import PriceListTaxBasis
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -10,23 +11,30 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 prices = Prices(client)
 
-result: PriceList = prices.prices_lists_create(
-    code = '',
-    name = '',
+result: Error = prices.prices_lists_create(
+    code = 'dealer-de',
+    name = 'Dealer prices',
     channel_id = '', # optional
     contact_id = '', # optional
-    currency = '', # optional
-    description = '', # optional
-    is_default = None, # optional
-    labels = {}, # optional
-    market_id = '', # optional
-    metadata = {}, # optional
+    currency = 'EUR', # optional
+    description = 'Contract prices for authorised dealers.', # optional
+    is_default = True, # optional
+    labels = {
+        "de": "H\u00e4ndlerpreise",
+        "en": "Dealer prices"
+    }, # optional
+    metadata = {
+        "erp_price_group": "A1",
+        "source_system": "erp"
+    }, # optional
     organization_id = '', # optional
-    priority = None, # optional
+    priority = 1, # optional
+    requires_auth = True, # optional
     status = PriceListStatus.ACTIVE, # optional
-    tax_included = None, # optional
-    valid_from = '', # optional
-    valid_until = '' # optional
+    tax_basis = PriceListTaxBasis.NET, # optional
+    tax_included = True, # optional
+    valid_from = '2026-01-01T00:00:00Z', # optional
+    valid_until = '2026-12-31T23:59:59Z' # optional
 )
 
 print(result.model_dump())

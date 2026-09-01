@@ -1,7 +1,7 @@
 ```python
-from revenexx_revenexx.client import Client
-from revenexx_revenexx.services.pages import Pages
-from revenexx_revenexx.models import Page
+from revenexx.client import Client
+from revenexx.services.pages import Pages
+from revenexx.models import Error
 
 client = Client()
 client.set_endpoint('https://api.revenexx.com') # Your API Endpoint
@@ -9,13 +9,13 @@ client.set_api_key_auth('<API_KEY>') # A gateway-managed scoped API key (rvxk_â€
 
 pages = Pages(client)
 
-result: Page = pages.pages_pages_create(
-    title = '',
-    bundle = '', # optional
+result: Error = pages.pages_pages_create(
+    title = 'About us',
+    bundle = 'standard', # optional
     host_options = {}, # optional
     meta = {}, # optional
-    slug = '', # optional
-    source_language = '' # optional
+    slug = 'about-us', # optional
+    source_language = 'de' # optional
 )
 
 print(result.model_dump())
